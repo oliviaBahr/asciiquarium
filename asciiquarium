@@ -184,18 +184,18 @@ sub add_castle {
 
 	my $castle_mask = q{
                 RR
-
-              yyy
-             y   y
-            y     y
-           y       y
-
-
-
-              yyy
-             yy yy
-            y y y y
-            yyyyyyy
+                
+                 
+                  
+                              
+                               
+                               
+   yy y    yy y y     y yy    
+  y y     y y y y     yyyy    
+   yy     y y          yy y   
+  y    y  y           yy y    
+  y yy     y          y y y   
+                              
 };
 
 	$anim->new_entity(
