@@ -90,6 +90,8 @@ my %depth = (
 	water_gap0	=> 9,
 );
 
+my $castle_color = 'BLACK'; # for toggleable castle color
+
 main();
 
 ####################### MAIN #######################
@@ -124,6 +126,7 @@ sub main {
 			if   ( $in eq 'q' ) { quit(); }   # Exit
 			elsif( $in eq 'r' ) { last; }     # Redraw (will recreate all objects)
 			elsif( $in eq 'p' ) { $paused = !$paused; }
+			elsif( $in eq 'c' ) { toggle_castle_color($anim); } # Toggle castle color
 
 			$anim->animate() unless($paused);
 		}
@@ -203,7 +206,7 @@ sub add_castle {
 		shape		=> $castle_image,
 		color		=> $castle_mask,
 		position	=> [ $anim->width()-32, $anim->height()-13, $depth{'castle'} ],
-		default_color	=> 'BLACK',
+		default_color	=> $castle_color,
 	);
 }
 
@@ -1484,6 +1487,24 @@ sub rand_color {
 		$color_mask =~ s/$i/$color/gm;
 	}
 	return $color_mask;
+}
+
+sub toggle_castle_color {
+	my ($anim) = @_;
+
+	# toggle color
+	if ($castle_color eq 'BLACK') { $castle_color = 'WHITE'; }
+	elsif ($castle_color eq 'WHITE') { $castle_color = 'YELLOW'; }
+	else { $castle_color = 'BLACK'; }
+
+	# remove castle
+	my $castle = $anim->get_entities_of_type('castle');
+	foreach my $obj (@{$castle}) {
+		$anim->del_entity($obj);
+	}
+	
+	# redraw castle
+	add_castle($anim);
 }
 
 sub VERSION_MESSAGE {
